@@ -1,0 +1,8 @@
+.logo {
+    height: 160px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-image: url(../../images/one-token.svg);
+    margin-top: 20px;
+}

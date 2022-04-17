@@ -1,0 +1,27 @@
+.trace-item {
+    font-size: 1.20rem;
+}
+
+.trace-item button {
+    width: 35px;
+}
+
+.trace-item-label {
+    margin-left: 1.25rem;
+    line-height: 35px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.trace-item-number {
+    width: 65px;
+    height: 32px;
+}
+
+.parent { white-space: nowrap; }
+
+.inline-right { display: inline-block; float: right; }
+
+.inline-left { display: inline-block; float: left; }
+
+

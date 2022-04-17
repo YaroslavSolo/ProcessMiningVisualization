@@ -1,11 +1,11 @@
 .mode_menu.ant-menu-horizontal {
-  line-height: 64px;
+    line-height: 64px;
 }
 
 .ant-menu.ant-menu-dark .mode_menu__process_model.ant-menu-item-selected {
-  background-color: darkred;
+    background-color: darkred;
 }
 
 .ant-menu.ant-menu-dark .mode_menu__run_algorithm.ant-menu-item-selected {
-  background-color: #008B27;
+    background-color: #008B27;
 }

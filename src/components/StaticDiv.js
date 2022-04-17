@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class StaticDiv extends Component {
-  shouldComponentUpdate() {
-    return false;
-  }
+    shouldComponentUpdate() {
+        return false;
+    }
 
-  render() {
-    const {divRef, ...rest} = this.props;
+    render() {
+        const {divRef, ...rest} = this.props;
 
-    return (
-      <div ref={divRef} {...rest} />
-    );
-  }
+        return (
+            <div ref={divRef} {...rest} />
+        );
+    }
 }
 
 export default StaticDiv;

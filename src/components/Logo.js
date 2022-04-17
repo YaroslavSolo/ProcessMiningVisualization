@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import './Logo.css';
+import React, {Component} from 'react';
+import './css/Logo.css';
 
 class Logo extends Component {
-  render() {
-    return (
-      <div className="logo" />
-    );
-  }
+    render() {
+        return (
+            <div className="logo"/>
+        );
+    }
 }
 
 export default Logo;

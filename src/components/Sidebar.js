@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import { Layout } from 'antd';
+import React, {Component} from 'react';
+import {Layout} from 'antd';
 import CreateBoxContainer from '../containers/CreateBoxContainer';
 import PetriNetMenuContainer from '../containers/PetriNetMenuContainer';
-import Logo from './Logo';
+import CaseTracesList from "./CaseTracesList";
 
-const { Sider } = Layout;
+const {Sider} = Layout;
 
 class Sidebar extends Component {
-  render() {
-    return (
-      <Sider>
-        <CreateBoxContainer />
-        <PetriNetMenuContainer />
-      </Sider>
-    );
-  }
+    render() {
+        return (
+            <Sider>
+                <CaseTracesList/>
+                <CreateBoxContainer/>
+                <PetriNetMenuContainer/>
+            </Sider>
+        );
+    }
 }
 
 export default Sidebar;

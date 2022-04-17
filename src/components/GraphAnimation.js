@@ -1,34 +1,34 @@
-import { PureComponent } from 'react';
+import {PureComponent} from 'react';
 import CytoscapeContext from '../contexts/CytoscapeContext';
 
 class GraphAnimation extends PureComponent {
-  static contextType = CytoscapeContext;
+    static contextType = CytoscapeContext;
 
-  async play() {
-    const element = this.context.elements(`#${this.props.elementId}`).first();
-    this.animation = new this.props.animation(element);
+    async play() {
+        const element = this.context.elements(`#${this.props.elementId}`).first();
+        this.animation = new this.props.animation(element);
 
-    await this.animation.play();
-    if (this.props.onEnd !== undefined) {
-      this.props.onEnd();
+        await this.animation.play();
+        if (this.props.onEnd !== undefined) {
+            this.props.onEnd();
+        }
     }
-  }
 
-  cancel() {
-    this.animation.cancel();
-  }
+    cancel() {
+        this.animation.cancel();
+    }
 
-  componentDidMount() {
-    this.play();
-  }
+    componentDidMount() {
+        this.play();
+    }
 
-  componentWillUnmount() {
-    this.cancel();
-  }
+    componentWillUnmount() {
+        this.cancel();
+    }
 
-  render() {
-    return null;
-  }
+    render() {
+        return null;
+    }
 }
 
 export default GraphAnimation;
