@@ -1,13 +1,15 @@
 {
   "name": "my-petri-net",
   "version": "0.1.0",
-  "license" : "MIT",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "antd": "3.10.9",
+    "bootstrap-icons": "^1.8.1",
     "cytoscape": "3.2.22",
     "cytoscape-edgehandles": "3.4.2",
     "memoizee": "0.4.14",
+    "notiflix": "^3.2.5",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "5.1.1",

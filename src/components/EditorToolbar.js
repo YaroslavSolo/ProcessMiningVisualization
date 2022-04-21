@@ -17,7 +17,7 @@ class EditorToolbar extends Component {
     render() {
         let activeNodeType = this.props.activeNodeType;
         return (
-            <Toolbar backgroundColor="darkred">
+            <Toolbar backgroundColor="#008B27">
                 <Radio.Group value={activeNodeType} onChange={this.handleChange} buttonStyle="solid">
                     <Radio.Button value={nodeType.TRANSITION}>
                         Transition

@@ -12,7 +12,7 @@ class Simulator extends Component {
 
         this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
         this.handleClickOnElement = this.handleClickOnElement.bind(this);
-        this.state = {};
+        this.state = {trace: "abcd", pos: 0};
     }
 
     activeTransitionIds() {
@@ -47,10 +47,42 @@ class Simulator extends Component {
         return this.activeTransitionIds().indexOf(id) !== -1;
     }
 
+    async wait() {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        await sleep(2000);
+    }
+
+    onRunStep = () => {
+        const pos = this.state.pos;
+        const activeTransitions = getActiveTransitions(this.props.petriNet)
+            .filter((t) => t.label === this.state.trace[pos]);
+
+        if (activeTransitions.length === 1) {
+            this.handleClickOnElement(null, activeTransitions[0].id);
+        }
+        this.setState({pos: pos + 1})
+    }
+
+    onRun = async () => {
+        const trace = this.state.trace;
+        for (let i = 0; i < trace.length; i++) {
+            const activeTransitions = getActiveTransitions(this.props.petriNet).filter((t) => t.label === trace[i]);
+            if (activeTransitions.length === 1) {
+                this.handleClickOnElement(null, activeTransitions[0].id);
+            }
+            await this.wait();
+        }
+    }
+
+    onReset = () => {
+        this.setState({pos: 0})
+        this.props.onReset();
+    }
+
     render() {
         return (
             <>
-                <SimulatorToolbar onReset={this.props.onReset}/>
+                <SimulatorToolbar onRun={this.onRun} onRunStep={this.onRunStep} onReset={this.onReset}/>
                 <GraphArea>
                     <PetriNetGraph petriNet={this.props.petriNet}
                                    locked={true}

@@ -17,7 +17,7 @@ class TransitionForm extends Component {
             <>
                 <h2>Transition</h2>
                 <Form layout="vertical">
-                    <Form.Item label="Label">
+                    <Form.Item label="Name">
                         <Input id="label"
                                value={this.props.label}
                                onChange={this.handleLabelChange}/>
