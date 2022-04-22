@@ -8,6 +8,7 @@ export default {
             edgesById: {},
             nodesById: {},
             markings: [{}],
+            traces: [],
         },
     },
 };

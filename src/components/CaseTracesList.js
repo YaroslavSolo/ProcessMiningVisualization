@@ -4,6 +4,11 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 class CaseTracesList extends Component {
 
+    constructor(props) {
+        super(props);
+        this.props.petriNet.traces = this.state.traces;
+    }
+
     traceId = 0;
 
     createTrace = (traceStr) => {
@@ -11,51 +16,52 @@ class CaseTracesList extends Component {
             key: this.traceId++,
             trace: traceStr,
             number: 1,
+            active: false,
         };
     }
 
     state = {
         traces: [
-            this.createTrace('abcdg'),
-            this.createTrace('abdcg'),
-            this.createTrace('abcg')
+            //this.createTrace('abcdg'),
+            //this.createTrace('abdcg'),
+            //this.createTrace('abcg')
         ],
         text : ''
     };
 
     addItem = (traceStr) => {
-        this.setState(({ traces }) => {
-            return { traces: [...traces, this.createTrace(traceStr)] };
-        });
+        const res = [...this.state.traces, this.createTrace(traceStr)];
+        this.setState({traces: res});
+        this.props.petriNet.traces = res;
     }
 
     deleteItem = (id) => {
-        this.setState(({ traces }) => {
-            const index = traces.findIndex((el) => el.key === id);
-            const res = [...traces.slice(0, index), ...traces.slice(index + 1)];
+        const traces = this.state.traces;
+        const index = traces.findIndex((el) => el.key === id);
+        const res = [...traces.slice(0, index), ...traces.slice(index + 1)];
 
-            return {
-                traces: res
-            };
-        });
+        this.setState({traces: res});
+        this.props.petriNet.traces = res;
     }
 
     changeNumber = (id, number) => {
-        this.setState(({ traces }) => {
-            const index = traces.findIndex((el) => el.key === id);
-            const targetTrace = traces[index]
-            targetTrace.number = Number(number);
+        const traces = this.state.traces;
+        const index = traces.findIndex((el) => el.key === id);
+        const targetTrace = traces[index]
+        targetTrace.number = Number(number);
+        const res = [...traces.slice(0, index), targetTrace, ...traces.slice(index + 1)];
 
-            const res = [...traces.slice(0, index), targetTrace, ...traces.slice(index + 1)];
-
-            return {
-                traces: res
-            };
-        });
+        this.setState({traces: res});
+        this.props.petriNet.traces = res;
     }
 
     onLabelChange = (event) => {
-        this.setState({ text: event.target.value });
+        const newValue = event.target.value;
+        const regexp = new RegExp("^[a-zA-Z]{0,15}$");
+
+        if (regexp.test(newValue)) {
+            this.setState({ text: event.target.value });
+        }
     };
 
     onSubmit = (event) => {
@@ -64,21 +70,22 @@ class CaseTracesList extends Component {
 
         if (length === 0) {
             return;
-        } else if (length > 25) {
+        } else if (length > 15) {
             Notify.failure("Case trace is too long");
             return;
         }
 
         this.addItem(this.state.text);
-        this.setState({ text: '' });
+        this.setState({text: '' });
     };
 
     render() {
         const items = this.state.traces.map((item) => {
-            const { key: id, ...other } = item;
+            const { key: id, active, ...other } = item;
+            const color = active ? "#008B27" : "whitesmoke";
 
             return (
-                <li key={id} className="list-group-item">
+                <li key={id} className="list-group-item" style={{background: color}}>
                     <TraceItem { ...other }
                                onNumberChange={(number) => this.changeNumber(id, number)}
                                onDeletion={() => this.deleteItem(id)}/>
@@ -88,19 +95,22 @@ class CaseTracesList extends Component {
 
         return (
             <div>
-                <h5>Case traces</h5>
-                <ul className="list-group">
-                    {items}
-                </ul>
+                <h4 style={{color: "whitesmoke", marginTop: "15px", marginBottom: "21px", marginLeft: "38px"}}>
+                    Case traces
+                </h4>
                 <form className='d-flex' onSubmit={this.onSubmit}>
                     <input type='text' className='form-control'
+                           style={{height: "48px"}}
                            placeholder='Enter trace' onChange={this.onLabelChange}
                            pattern='[a-zA-Z]*' value={this.state.text}/>
 
-                    <button className="btn btn-light">
+                    <button className="btn btn-light" style={{height: "48px"}}>
                         Add
                     </button>
                 </form>
+                <ul className="list-group">
+                    {items}
+                </ul>
             </div>
         );
     }

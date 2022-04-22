@@ -12,7 +12,7 @@ class Simulator extends Component {
 
         this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
         this.handleClickOnElement = this.handleClickOnElement.bind(this);
-        this.state = {trace: "abcd", pos: 0};
+        this.state = {traceIdx: 0, pos: 0};
     }
 
     activeTransitionIds() {
@@ -49,33 +49,61 @@ class Simulator extends Component {
 
     async wait() {
         const sleep = ms => new Promise(r => setTimeout(r, ms));
-        await sleep(2000);
+        await sleep(1500);
+    }
+
+    isFinished = () => {
+        const traces = this.props.petriNet.traces;
+        const traceIdx = this.state.traceIdx;
+        return traces.length <= traceIdx;
+    }
+
+    updateState = () => {
+        const traceIdx = this.state.traceIdx;
+        const currentTrace = this.props.petriNet.traces[traceIdx];
+        const pos = this.state.pos;
+
+        if (currentTrace.trace.length === pos + 1) {
+            this.props.onReset();
+            currentTrace.active = false;
+            if (traceIdx + 1 < this.props.petriNet.traces.length) {
+                this.props.petriNet.traces[traceIdx + 1].active = true;
+            }
+            this.setState({traceIdx: traceIdx + 1, pos: 0});
+        } else {
+            this.setState({pos: pos + 1});
+        }
     }
 
     onRunStep = () => {
+        console.log(this.state.traceIdx, "pos: ", this.state.pos);
+        if (this.isFinished()) {
+            return;
+        }
+
+        const petriNet = this.props.petriNet;
+        const trace = petriNet.traces[this.state.traceIdx];
+        trace.active = true;
         const pos = this.state.pos;
-        const activeTransitions = getActiveTransitions(this.props.petriNet)
-            .filter((t) => t.label === this.state.trace[pos]);
+        const activeTransitions = getActiveTransitions(petriNet)
+            .filter((t) => t.label === trace.trace[pos]);
 
         if (activeTransitions.length === 1) {
             this.handleClickOnElement(null, activeTransitions[0].id);
+            this.updateState();
         }
-        this.setState({pos: pos + 1})
     }
 
     onRun = async () => {
-        const trace = this.state.trace;
-        for (let i = 0; i < trace.length; i++) {
-            const activeTransitions = getActiveTransitions(this.props.petriNet).filter((t) => t.label === trace[i]);
-            if (activeTransitions.length === 1) {
-                this.handleClickOnElement(null, activeTransitions[0].id);
-            }
+        while (!this.isFinished()) {
+            this.onRunStep();
             await this.wait();
         }
     }
 
     onReset = () => {
-        this.setState({pos: 0})
+        this.setState({traceIdx: 0, pos: 0});
+        this.props.petriNet.traces[0].active = true;
         this.props.onReset();
     }
 

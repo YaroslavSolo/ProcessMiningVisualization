@@ -9,7 +9,12 @@ class TransitionForm extends Component {
     }
 
     handleLabelChange(event) {
-        this.props.onLabelChange(event.target.value);
+        const newValue = event.target.value;
+        const regexp = new RegExp("^[a-zA-Z]?$");
+
+        if (regexp.test(newValue)) {
+            this.props.onLabelChange(event.target.value);
+        }
     }
 
     render() {
@@ -17,8 +22,9 @@ class TransitionForm extends Component {
             <>
                 <h2>Transition</h2>
                 <Form layout="vertical">
-                    <Form.Item label="Name">
-                        <Input id="label"
+                    <p style={{color: "darkred"}}>Transition name should correspond to trace event</p>
+                    <Form.Item label="">
+                        <Input id="label" placeholder="Enter name"
                                value={this.props.label}
                                onChange={this.handleLabelChange}/>
                     </Form.Item>

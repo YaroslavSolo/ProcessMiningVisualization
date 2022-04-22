@@ -3,12 +3,13 @@
 }
 
 .trace-item button {
-    width: 35px;
+    width: 32px;
+    height: 25px;
 }
 
 .trace-item-number {
-    width: 65px;
-    height: 32px;
+    width: 134px;
+    height: 25px;
 }
 
 .parent { white-space: nowrap; }

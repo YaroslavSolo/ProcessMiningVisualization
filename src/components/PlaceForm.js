@@ -12,27 +12,31 @@ class PlaceForm extends Component {
         this.props.onLabelChange(event.target.value);
     }
 
+    onChange = (newValue) => {
+        const regexp = new RegExp("^[1-9]?[0-9]{0,3}$");
+
+        if (regexp.test(newValue)) {
+            console.log(newValue);
+            this.setState({number: newValue});
+            this.props.onNumberOfTokensChange(newValue);
+        }
+    }
+
     render() {
         return (
             <>
                 <h2>Place</h2>
                 <Form layout="vertical">
-                    <Form.Item label="Label">
-                        <Input id="label"
+                    <Form.Item label="">
+                        <Input id="label" placeholder="Enter name"
                                value={this.props.label}
                                onChange={this.handleLabelChange}/>
-                    </Form.Item>
-                    <Form.Item label="Capacity" extra="Leave empty for unlimited capacity.">
-                        <InputNumber id="capacityLimit"
-                                     min={0}
-                                     value={this.props.capacityLimit}
-                                     onChange={this.props.onCapacityLimitChange}/>
                     </Form.Item>
                     <Form.Item label="Initial number of tokens">
                         <InputNumber id="numberOfTokens"
                                      min={0}
                                      value={this.props.numberOfTokens}
-                                     onChange={this.props.onNumberOfTokensChange}/>
+                                     onChange={this.onChange}/>
                     </Form.Item>
                     <Form.Item>
                         <Button id="delete"

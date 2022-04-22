@@ -8,38 +8,40 @@ class TraceItem extends React.Component {
         number: "1"
     };
 
-    onLabelChange = (event) => {
+    onNumberChange = (event) => {
         const newValue = event.target.value;
-        const regexp = new RegExp("^[1-9]?[0-9]{0,7}$");
+        const regexp = new RegExp("^[1-9]?[0-9]{0,9}$");
 
         if (regexp.test(newValue)) {
-            this.setState({ number: newValue });
+            this.setState({number: newValue});
             this.props.onNumberChange(newValue);
         }
     };
 
     onLostFocus = () => {
         if (this.state.number === '') {
-            this.setState({ number: '1' });
+            this.setState({number: '1'});
         }
     }
 
     render() {
-        const { trace = 'abcd', onDeletion } = this.props;
+        const {trace = 'abcd', onDeletion} = this.props;
 
         return (
-            <div className="trace-item parent">
-                <Button type="danger" icon="delete" className="inline-right" onClick={onDeletion}/>
-
-                <input name="numberInput" type='text' className="inline-right trace-item-number form-control"
-                       placeholder='1' required
-                       onChange={this.onLabelChange}
-                       onBlur={this.onLostFocus}
-                       value={this.state.number}/>
-
-                <span className="inline-left">
+            <div>
+                <span>
                     {trace}
                 </span>
+                <div className="trace-item parent">
+                    <Button type="danger" icon="delete" className="inline-right" onClick={onDeletion}/>
+
+                    <input name="numberInput" type='text' className="inline-right trace-item-number form-control"
+                           placeholder='1' required
+                           onChange={this.onNumberChange}
+                           onBlur={this.onLostFocus}
+                           value={this.state.number}/>
+
+                </div>
             </div>
         );
     }
