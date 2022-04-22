@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/ProcessMiningVisualization/precache-manifest.ae48f1d3e9203e1a7fe90ef0aa166c61.js"
+  "/ProcessMiningVisualization/precache-manifest.464bfb0c0b8725137ea7f7ff15b8eac9.js"
 );
 
 workbox.clientsClaim();
