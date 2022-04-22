@@ -3,7 +3,7 @@ Interactive visualization of some process mining algorithms
 
 ## Учебная программа для демонстрации работы алгоритмов process mining
 
-Планируем сделать визуализацию для следующих алгортимов conformance checking:
+Запланировано сделать визуализацию для следующих алгортимов conformance checking:
 
 0. Footprints based
 1. Token-based replay
@@ -13,7 +13,7 @@ Interactive visualization of some process mining algorithms
 
 ## Установка и запуск
 
-Для запуска нужно установить Node.js и yarn
+Для запуска нужно установить Node.js и yarn (или npm)
 
 ```bash
 Для macos:
