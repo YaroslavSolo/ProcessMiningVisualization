@@ -31,7 +31,6 @@ class EdgeHandles extends PureComponent {
         if (this.shouldAddEdge(sourceNode, targetNode)) {
             return 'flat';
         }
-        return;
     }
 
     handleComplete(sourceNode, targetNode) {

@@ -13,7 +13,7 @@ const secondaryColor = '#BFBFBF';
 const selectedColor = '#1890ff';
 const textColor = '#242424';
 const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-const fontSize = 12;
+const fontSize = 20;
 
 const generateImageWithNumber = (number) => {
     const svg = `

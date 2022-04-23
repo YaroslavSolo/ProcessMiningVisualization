@@ -16,7 +16,6 @@ class PlaceForm extends Component {
         const regexp = new RegExp("^[1-9]?[0-9]{0,3}$");
 
         if (regexp.test(newValue)) {
-            console.log(newValue);
             this.setState({number: newValue});
             this.props.onNumberOfTokensChange(newValue);
         }

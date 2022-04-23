@@ -22,7 +22,7 @@ class TransitionForm extends Component {
             <>
                 <h2>Transition</h2>
                 <Form layout="vertical">
-                    <p style={{color: "darkred"}}>Transition name should correspond to trace event</p>
+                    <p style={{color: "darkred"}}>Name should be a letter corresponding to trace event</p>
                     <Form.Item label="">
                         <Input id="label" placeholder="Enter name"
                                value={this.props.label}

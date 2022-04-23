@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {fireTransition, resetMarkings} from '../actions';
+import {addTokens, fireTransition, resetMarkings} from '../actions';
 import {getCurrentPetriNetId} from '../selectors';
 import Simulator from '../components/Simulator';
 
@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ),
     onReset: () => dispatch(
         resetMarkings(getCurrentPetriNetId(ownProps))
+    ),
+    onAddTokens: (transitionId) => dispatch(
+        addTokens(getCurrentPetriNetId(ownProps), transitionId)
     ),
 });
 

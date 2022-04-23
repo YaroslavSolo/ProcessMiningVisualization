@@ -63,10 +63,19 @@ class Editor extends Component {
         this.setState({activeNodeType: nodeType});
     }
 
+    clearPetriNet = () => {
+        this.props.petriNet.edgesById = {};
+        this.props.petriNet.nodesById = {};
+        this.props.petriNet.markings = [{}];
+        this.setState({selected: {}});
+    }
+
     render() {
         return (
             <>
-                <EditorToolbar activeNodeType={this.state.activeNodeType} onNodeTypeChange={this.handleNodeTypeChange}/>
+                <EditorToolbar activeNodeType={this.state.activeNodeType}
+                               onNodeTypeChange={this.handleNodeTypeChange}
+                               onClear={this.clearPetriNet}/>
                 <Layout>
                     <GraphArea>
                         <PetriNetGraph

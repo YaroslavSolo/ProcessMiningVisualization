@@ -1,8 +1,11 @@
 import edgesById from './edgesById';
 import nodesById from './nodesById';
 import markings from './markings';
-import {FIRE_TRANSITION} from '../actions';
-import {getIncomingEdges, getOutgoingEdges} from '../selectors/petriNet';
+import {ADD_TOKENS, FIRE_TRANSITION} from '../actions';
+import {
+    getIncomingEdges,
+    getOutgoingEdges,
+} from '../selectors/petriNet';
 
 const petriNet = (state, action) => {
     switch (action.type) {
@@ -20,6 +23,19 @@ const petriNet = (state, action) => {
                 markings: [
                     ...state.markings,
                     nextMarking,
+                ]
+            }
+        }
+        case ADD_TOKENS: {
+            const edges = getIncomingEdges(state, action.transitionId);
+            edges.forEach(edge => {
+                state.markings[state.markings.length - 1][edge.from] = edge.weight;
+            });
+
+            return {
+                ...state,
+                markings: [
+                    ...state.markings,
                 ]
             }
         }

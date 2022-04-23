@@ -71,7 +71,10 @@ class CaseTracesList extends Component {
         if (length === 0) {
             return;
         } else if (length > 15) {
-            Notify.failure("Case trace is too long");
+            Notify.failure("Case trace is too long, max: 15");
+            return;
+        } else if (this.state.traces.length > 25) {
+            Notify.failure("Too many case traces, max: 25");
             return;
         }
 
@@ -82,7 +85,7 @@ class CaseTracesList extends Component {
     render() {
         const items = this.state.traces.map((item) => {
             const { key: id, active, ...other } = item;
-            const color = active ? "#008B27" : "whitesmoke";
+            const color = active ? "#90EE90" : "whitesmoke";
 
             return (
                 <li key={id} className="list-group-item" style={{background: color}}>
@@ -95,7 +98,9 @@ class CaseTracesList extends Component {
 
         return (
             <div>
-                <h4 style={{color: "whitesmoke", marginTop: "15px", marginBottom: "21px", marginLeft: "38px"}}>
+                <h4 style={{color: "whitesmoke", marginTop: "15px",
+                            marginBottom: "21px", marginLeft: "38px",
+                            fontSize: 23}}>
                     Case traces
                 </h4>
                 <form className='d-flex' onSubmit={this.onSubmit}>

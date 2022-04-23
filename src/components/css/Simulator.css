@@ -1,0 +1,22 @@
+.wrapper{
+    display:flex;
+    flex-direction: column;
+}
+
+.parent {
+    white-space: nowrap;
+}
+
+.inline-right {
+    display: inline-block;
+    float: right;
+}
+
+.inline-left {
+    display: inline-block;
+    float: left;
+}
+
+.center {
+    margin: 0 auto;
+}

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Radio} from 'antd';
+import {Button, Radio} from 'antd';
 import * as nodeType from '../constants/nodeTypes';
 import Toolbar from './Toolbar';
+import './css/HorizontalToolbar.css';
 
 class EditorToolbar extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class EditorToolbar extends Component {
                         Place
                     </Radio.Button>
                 </Radio.Group>
+                <Button id="clear" icon="delete" className="btn-margin" onClick={this.props.onClear}>Clear</Button>
             </Toolbar>
         )
     }
