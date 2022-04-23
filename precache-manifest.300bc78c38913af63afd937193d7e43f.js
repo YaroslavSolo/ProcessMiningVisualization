@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "6583b5eed67c9192ec8b",
-    "url": "/ProcessMiningVisualization/static/css/main.1f62a142.chunk.css"
+    "revision": "4aca6e707ec208b152c3",
+    "url": "/ProcessMiningVisualization/static/css/main.e2292c63.chunk.css"
   },
   {
-    "revision": "6583b5eed67c9192ec8b",
-    "url": "/ProcessMiningVisualization/static/js/main.6583b5ee.chunk.js"
+    "revision": "4aca6e707ec208b152c3",
+    "url": "/ProcessMiningVisualization/static/js/main.4aca6e70.chunk.js"
   },
   {
-    "revision": "5a0582677f7dcccdf887",
-    "url": "/ProcessMiningVisualization/static/css/1.3f14477f.chunk.css"
+    "revision": "5390cb32e8df8e068f70",
+    "url": "/ProcessMiningVisualization/static/css/1.e3b7dcae.chunk.css"
   },
   {
-    "revision": "5a0582677f7dcccdf887",
-    "url": "/ProcessMiningVisualization/static/js/1.5a058267.chunk.js"
+    "revision": "5390cb32e8df8e068f70",
+    "url": "/ProcessMiningVisualization/static/js/1.5390cb32.chunk.js"
   },
   {
     "revision": "393c27fc8b12b00a4e0c",
@@ -56,7 +56,7 @@ self.__precacheManifest = [
     "url": "/ProcessMiningVisualization/static/media/nine-tokens.e2e95f09.svg"
   },
   {
-    "revision": "7a494eb6b8a8da56c34ab0e3e66b97f2",
+    "revision": "570cee72253ef7fbf78ee3fad6105aa8",
     "url": "/ProcessMiningVisualization/index.html"
   }
 ];
