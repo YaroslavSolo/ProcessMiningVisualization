@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "8175204ab6d6568bae9d",
+    "revision": "76ff0597c08436526d23",
     "url": "/ProcessMiningVisualization/static/css/main.3f204fa4.chunk.css"
   },
   {
-    "revision": "8175204ab6d6568bae9d",
-    "url": "/ProcessMiningVisualization/static/js/main.8175204a.chunk.js"
+    "revision": "76ff0597c08436526d23",
+    "url": "/ProcessMiningVisualization/static/js/main.76ff0597.chunk.js"
   },
   {
     "revision": "bc654e7cfbf7148ee656",
@@ -56,7 +56,7 @@ self.__precacheManifest = [
     "url": "/ProcessMiningVisualization/static/media/nine-tokens.e2e95f09.svg"
   },
   {
-    "revision": "ed9734e304feb3742b6a8f8a6c5343e6",
+    "revision": "d4e7ca95bbf479256966246a90135b46",
     "url": "/ProcessMiningVisualization/index.html"
   }
 ];
