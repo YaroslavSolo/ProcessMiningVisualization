@@ -1,5 +1,6 @@
 # ProcessMiningVisualization
 Interactive visualization of some process mining algorithms
+https://yaroslavsolo.github.io/ProcessMiningVisualization/
 
 ## Учебная программа для демонстрации работы алгоритмов process mining
 
