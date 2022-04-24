@@ -1,4 +1,5 @@
 export const simulatorInitialState = {
+    fitness: undefined,
     isRunning: false,
     traceIdx: 0,
     pos: 0,

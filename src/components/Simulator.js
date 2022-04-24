@@ -161,7 +161,7 @@ class Simulator extends Component {
         const curRemaining = getNumNetTokens(this.props.petriNet);
         this.setState({curRemaining: curRemaining - 1});
 
-        this.updateUiTokens();
+        this.updateUiTokens(this.props.petriNet.traces[this.state.traceIdx - 1]);
         const {produced, consumed, missing, remaining} = this.state;
         const fitness = 0.5 * (1 - missing / consumed) + 0.5 * (1 - remaining / produced);
         this.setState({fitness: Number(fitness).toFixed(6)});
@@ -299,7 +299,7 @@ class Simulator extends Component {
     }
 
     renderResult = () => {
-        if (this.isFinished() && this.props.petriNet.traces.length !== 0) {
+        if (this.isFinished() && this.props.petriNet.traces.length !== 0 && this.state.fitness !== undefined) {
             return (
                 <div className="wrapper">
                     <br/>
@@ -309,6 +309,13 @@ class Simulator extends Component {
                     <h6>Fitness = {this.state.fitness}</h6>
                 </div>
             )
+        }
+    }
+
+    renderCurrentTraceInfo = () => {
+        const trace = this.props.petriNet.traces.filter(tr => tr.active)[0];
+        if (trace !== undefined) {
+            return (<p>Multiplier: x{trace.number}</p>)
         }
     }
 
@@ -373,6 +380,7 @@ class Simulator extends Component {
                                     <p className="inline-left">Remaining: </p>
                                     <p className="inline-right">{this.state.curRemaining}</p>
                                 </div>
+                                {this.renderCurrentTraceInfo()}
                             </div>
                             {this.renderResult()}
                         </div>
