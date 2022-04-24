@@ -2,9 +2,11 @@ class TokenFlowAnimation {
     constructor(edgeElement) {
         this.cytoscape = edgeElement.cy();
         this.edgeElement = edgeElement;
+        this.speed = 350;
     }
 
-    async play() {
+    async play(speed) {
+        this.speed = speed;
         const token = this.addToken();
         await this.animateToken(token)
         this.removeToken(token);

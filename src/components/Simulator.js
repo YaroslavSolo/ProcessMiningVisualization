@@ -5,7 +5,8 @@ import {
     getNumConsumedTokens,
     getNumProducedTokens,
     getNumNetTokens,
-    getTransitionByLabel, getNumMissingTokens,
+    getTransitionByLabel,
+    getNumMissingTokens,
 } from '../selectors/petriNet';
 import GraphArea from './GraphArea';
 import GraphAnimation from './GraphAnimation';
@@ -17,15 +18,15 @@ import Sider from "antd/es/layout/Sider";
 import {Layout} from "antd";
 import './css/Simulator.css';
 import Logo from "./Logo";
+import {FAST, SLOW} from "../constants/speedTypes";
+import {simulatorInitialState} from "../utils/initialState";
 
 class Simulator extends Component {
     constructor(props) {
         super(props);
         this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
         this.handleClickOnElement = this.handleClickOnElement.bind(this);
-        this.state = {traceIdx: 0, pos: 0, reset: true, isRunning: false,
-            produced: 0, consumed: 0, missing: 0, remaining: 0,
-            curProduced: 0, curConsumed: 0, curMissing: 0, curRemaining: 0};
+        this.state = {reset: true, animationSpeed: 550, waitTime: 1650, speed: SLOW, ...simulatorInitialState};
         this.markings = JSON.parse(JSON.stringify(this.props.petriNet.markings));
         this.isStepReady = true;
     }
@@ -39,7 +40,7 @@ class Simulator extends Component {
     }
 
     componentWillUnmount() {
-        this.onReset();
+        this.reset();
     }
 
     handleAnimationEnd() {
@@ -67,6 +68,11 @@ class Simulator extends Component {
         await sleep(time === undefined ? 1500 : time);
     }
 
+    validatePetriNet = () => {
+        const net = this.props.petriNet;
+        return Object.values(net.edgesById).length >= Object.values(net.nodesById).length - 1;
+    }
+
     validateTransitionNames = () => {
         const transitionNames = new Set();
         const transitions = Object.values(this.props.petriNet.nodesById)
@@ -78,7 +84,29 @@ class Simulator extends Component {
             }
         });
 
-        return transitions.length === transitionNames.size;
+        const namesFromTraces = new Set();
+        const traces = this.props.petriNet.traces.map(t => t.trace);
+        traces.forEach(trace => {
+            trace.split('').forEach(name => {
+                namesFromTraces.add(name);
+            })
+        });
+
+        const areSetsEqual = (a, b) => a.size === b.size && [...a].every(value => b.has(value));
+
+        return transitions.length === transitionNames.size && areSetsEqual(namesFromTraces, transitionNames);
+    }
+
+    changeSpeed = (newSpeed) => {
+        switch (newSpeed) {
+            case FAST: {
+                this.setState({speed: FAST, animationSpeed: 100, waitTime: 350});
+                return;
+            }
+            default: {
+                this.setState({speed: SLOW, animationSpeed: 550, waitTime: 1650});
+            }
+        }
     }
 
     onMissingToken = async () => {
@@ -136,7 +164,7 @@ class Simulator extends Component {
         this.updateUiTokens();
         const {produced, consumed, missing, remaining} = this.state;
         const fitness = 0.5 * (1 - missing / consumed) + 0.5 * (1 - remaining / produced);
-        this.setState({fitness: fitness});
+        this.setState({fitness: Number(fitness).toFixed(6)});
 
         Notify.success("Algorithm has finished!");
     }
@@ -172,19 +200,30 @@ class Simulator extends Component {
         }
         if (this.isStepReady) {
             this.isStepReady = false;
-            this.onRunStep();
-            setTimeout(() => this.isStepReady = true, 1550);
+            this.runStep();
+            setTimeout(() => this.isStepReady = true, this.state.waitTime + 30);
         }
     }
 
-    onRunStep = async () => {
-        console.log("idx: ", this.state.traceIdx, "pos: ", this.state.pos);
-        if (!this.validateTransitionNames()) {
-            Notify.failure("Transition names are incorrect");
-            return;
+    validateBeforeRun = () => {
+        if (!this.validatePetriNet()) {
+            Notify.failure("Process model is not consistent");
+            return false;
         }
         if (this.props.petriNet.traces.length === 0) {
             Notify.failure("There are no case traces to run");
+            return false;
+        }
+        if (!this.validateTransitionNames()) {
+            Notify.failure("Transition names are incorrect");
+            return false;
+        }
+        return true;
+    }
+
+    runStep = async () => {
+        console.log("idx: ", this.state.traceIdx, "pos: ", this.state.pos);
+        if (!this.validateBeforeRun()) {
             return;
         }
         if (this.isFinished()) {
@@ -213,14 +252,19 @@ class Simulator extends Component {
         }
     }
 
-    onRun = async () => {
+    run = async () => {
         if (this.state.isRunning) {
             return;
         }
+        if (!this.validateBeforeRun()) {
+            return;
+        }
+
         this.setState({isRunning: true});
         while (!this.isFinished()) {
-            await this.onRunStep();
-            await this.wait(1500);
+            await this.runStep();
+
+            await this.wait(this.state.waitTime);
             if (!this.state.isRunning) {
                 return;
             }
@@ -236,10 +280,12 @@ class Simulator extends Component {
         }
     }
 
-    onReset = async () => {
+    reset = async () => {
         if (this.state.isRunning) {
             await this.wait(50);
         }
+
+        this.setState({reset: true, ...simulatorInitialState});
         const traceIdx = this.state.traceIdx;
         if (traceIdx < this.props.petriNet.traces.length && traceIdx >= 0) {
             this.props.petriNet.traces[traceIdx].active = false;
@@ -247,10 +293,8 @@ class Simulator extends Component {
         if (this.props.petriNet.traces.length !== 0) {
             this.props.petriNet.traces[this.props.petriNet.traces.length - 1].active = false;
         }
+
         this.props.petriNet.markings = JSON.parse(JSON.stringify(this.markings));
-        this.setState({traceIdx: 0, pos: 0, reset: true, isRunning: false,
-            produced: 0, consumed: 0, missing: 0, remaining: 0,
-            curProduced: 0, curConsumed: 0, curMissing: 0, curRemaining: 0});
         this.props.onReset();
     }
 
@@ -271,7 +315,12 @@ class Simulator extends Component {
     render() {
         return (
             <>
-                <SimulatorToolbar onRun={this.onRun} onRunStep={this.tryRunStep} onReset={this.onReset} onPause={this.pause}/>
+                <SimulatorToolbar onRun={this.run}
+                                  onRunStep={this.tryRunStep}
+                                  onReset={this.reset}
+                                  onPause={this.pause}
+                                  onSpeedChange={this.changeSpeed}
+                                  speed={this.state.speed}/>
                 <Layout>
                     <GraphArea>
                         <PetriNetGraph petriNet={this.props.petriNet}
@@ -340,6 +389,7 @@ class Simulator extends Component {
 
         return <GraphAnimation elementId={this.state.selected}
                                animation={TransitionAnimation}
+                               speed={this.state.animationSpeed}
                                onEnd={this.handleAnimationEnd}/>
     }
 }

@@ -5,6 +5,7 @@ class TransitionAnimation {
         this.canceled = false;
         this.cytoscape = transitionElement.cy();
         this.transitionElement = transitionElement;
+        this.speed = 350;
     }
 
     async animateIncomingEdge(edgeElement) {
@@ -52,14 +53,15 @@ class TransitionAnimation {
     }
 
     animateTokenFlowOfEdge(edgeElement) {
-        return TokenFlowAnimationFactory.animationFor(edgeElement).play();
+        return TokenFlowAnimationFactory.animationFor(edgeElement).play(this.speed);
     }
 
     cancel() {
         this.canceled = true;
     }
 
-    async play() {
+    async play(speed) {
+        this.speed = speed;
         await this.animateIncomingEdges();
         await this.animateOutgoingEdges();
     }

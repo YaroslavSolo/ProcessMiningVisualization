@@ -40,7 +40,6 @@ class TraceItem extends React.Component {
                            onChange={this.onNumberChange}
                            onBlur={this.onLostFocus}
                            value={this.state.number}/>
-
                 </div>
             </div>
         );

@@ -8,7 +8,7 @@ class GraphAnimation extends PureComponent {
         const element = this.context.elements(`#${this.props.elementId}`).first();
         this.animation = new this.props.animation(element);
 
-        await this.animation.play();
+        await this.animation.play(this.props.speed);
         if (this.props.onEnd !== undefined) {
             this.props.onEnd();
         }

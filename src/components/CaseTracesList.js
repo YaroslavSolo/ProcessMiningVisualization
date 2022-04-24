@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TraceItem from "./TraceItem";
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import {Notify} from 'notiflix/build/notiflix-notify-aio';
+import './css/CaseTracesList.css';
 
 class CaseTracesList extends Component {
 
@@ -21,11 +22,7 @@ class CaseTracesList extends Component {
     }
 
     state = {
-        traces: [
-            //this.createTrace('abcdg'),
-            //this.createTrace('abdcg'),
-            //this.createTrace('abcg')
-        ],
+        traces: [],
         text : ''
     };
 
@@ -98,16 +95,17 @@ class CaseTracesList extends Component {
 
         return (
             <div>
-                <h4 style={{color: "whitesmoke", marginTop: "15px",
-                            marginBottom: "21px", marginLeft: "38px",
-                            fontSize: 23}}>
+                <h4 className="case-header">
                     Case traces
                 </h4>
                 <form className='d-flex' onSubmit={this.onSubmit}>
-                    <input type='text' className='form-control'
+                    <input type='text'
+                           className='form-control'
                            style={{height: "48px"}}
-                           placeholder='Enter trace' onChange={this.onLabelChange}
-                           pattern='[a-zA-Z]*' value={this.state.text}/>
+                           placeholder='Enter trace'
+                           onChange={this.onLabelChange}
+                           pattern='[a-zA-Z]*'
+                           value={this.state.text}/>
 
                     <button className="btn btn-light" style={{height: "48px"}}>
                         Add

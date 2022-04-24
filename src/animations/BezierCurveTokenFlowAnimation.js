@@ -13,7 +13,7 @@ class BezierCurveTokenFlowAnimation extends TokenFlowAnimation {
 
     animateToken(token) {
         let numberOfSteps = 30;
-        let durationOfStep = 500 / numberOfSteps;
+        let durationOfStep = this.speed / numberOfSteps;
         let delta = 1.0 / numberOfSteps;
         for (var i = 0; i < (numberOfSteps - 1); i++) {
             let t = delta * (i + 1);

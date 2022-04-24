@@ -61,7 +61,7 @@ class PetriNetGraph extends PureComponent {
             <Graph style={petriNetGraphStyle}
                    layout={this.state.layout}
                    elementsById={this.elementsById()}
-                   {...this.props} >
+                   {...this.props}>
                 {this.renderEdgeHandles()}
                 {this.props.children}
             </Graph>
